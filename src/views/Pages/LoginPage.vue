@@ -27,11 +27,11 @@
           <div class="socials_button_block">
             <div class="google_btn">
               <img src="@/assets/images/—Pngtree—google%20internet%20icon%20vector_12256707.png" alt="icon">
-              <p>Sign in with Google</p>
+              <p>Google</p>
             </div>
             <div class="google_btn">
               <img src="@/assets/images/3225194_app_facebook_logo_media_popular_icon.png" alt="icon">
-              <p>Sign in with Facebook</p>
+              <p>Facebook</p>
             </div>
           </div>
           <p>Don't you have an account? <a>Sign up</a></p>
@@ -46,7 +46,14 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      form: {
+        email: '',
+        password: '',
+      }
+    }
+  }
 }
 </script>
 
@@ -180,5 +187,52 @@ export default {
   height: 100%;
   object-fit: cover;
   border-radius: 32px;
+}
+@media all and (max-width: 576px) {
+  .main-container {
+    width: 100%;
+    flex-direction:  column;
+    padding: 32px 12px;
+    gap: 27px;
+  }
+  .left-side-container {
+    order: 2 !important;
+  }
+  .right_side {
+    order: 1 !important;
+  }
+  .right_side img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .text-block {
+    gap: 16px;
+  }
+  .text-block h1 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .text-block h4 {
+    font-size: 15px;
+  }
+  .left-side {
+    gap: 24px;
+  }
+  .form-block {
+    gap: 16px;
+  }
+  .inputs label {
+    font-size: 14px;
+  }
+  .form-block a {
+    font-size: 14px;
+  }
+  .socials_button_block {
+    flex-direction: row;
+  }
+  .google_btn p {
+    font-size: 14px;
+  }
 }
 </style>
