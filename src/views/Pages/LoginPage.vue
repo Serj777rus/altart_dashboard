@@ -2,23 +2,23 @@
   <div class="main">
     <div class="main-container">
       <div class="left-side-container">
-        <div class="left-side">
+        <div class="left-side" :class="{active: loginPage}">
           <div class="text-block">
-            <h1>Welcome Back</h1>
+            <h1>Welcome!</h1>
             <h4>Today is a new day. It's your day. You shape it.
               Sign in to start managing your projects.</h4>
           </div>
           <div class="form-block">
             <div class="inputs">
               <label for="Email">Email</label>
-              <input type="email" name="Email" id="Email" required placeholder="example@example.com">
+              <input v-model="form.email" type="email" name="Email" id="Email" required placeholder="example@example.com">
             </div>
             <div class="inputs">
               <label for="password">Password</label>
-              <input type="password" name="password" id="password">
+              <input v-model="form.password" type="password" name="password" id="password">
             </div>
             <a>Forgot your password?</a>
-            <button type="submit">Sign in</button>
+            <button @click="register" type="submit">Sign in</button>
           </div>
           <div class="or-block">
             <div class="line"></div>
@@ -34,23 +34,98 @@
               <p>Facebook</p>
             </div>
           </div>
-          <p>Don't you have an account? <a>Sign up</a></p>
+          <p>Don't you have an account? <a @click="loginPage = false">Sign up</a></p>
+        </div>
+        <div class="left-side" :class="{active: loginPage === false}">
+          <div class="text-block">
+            <h1>Welcome Back</h1>
+            <h4>Please, input your email and password to login in our account</h4>
+          </div>
+          <div class="form-block">
+            <div class="inputs">
+              <label for="Email">Email</label>
+              <input v-model="loginForm.email" type="email" name="Email" id="Email" required placeholder="example@example.com">
+            </div>
+            <div class="inputs">
+              <label for="password">Password</label>
+              <input v-model="loginForm.password" type="password" name="password" id="password">
+            </div>
+            <button @click="login" type="submit">Sign up</button>
+          </div>
+          <div class="or-block">
+            <div class="line"></div>
+            <p>Or</p>
+          </div>
+          <div class="socials_button_block">
+            <div class="google_btn">
+              <img src="@/assets/images/—Pngtree—google%20internet%20icon%20vector_12256707.png" alt="icon">
+              <p>Google</p>
+            </div>
+            <div class="google_btn">
+              <img src="@/assets/images/3225194_app_facebook_logo_media_popular_icon.png" alt="icon">
+              <p>Facebook</p>
+            </div>
+          </div>
+          <p>Do you have an account? <a @click="loginPage = true">Sign in</a></p>
         </div>
       </div>
       <div class="right_side">
         <img src="@/assets/images/freepik__expand__8186.png" alt="cover">
       </div>
     </div>
+    <NotificationAlert :message="message" :isShow="showNotification"></NotificationAlert>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import NotificationAlert from '@/components/NotificationAlert.vue'
 export default {
+  components: {NotificationAlert},
   data() {
     return {
       form: {
         email: '',
         password: '',
+      },
+      loginForm: {
+        email: '',
+        password: '',
+      },
+      message: '',
+      showNotification: false,
+      loginPage: true
+    }
+  },
+  methods: {
+    async register() {
+      try {
+        const response = await axios.post('http://localhost:3005/createUser', this.form);
+        if (response.status === 200) {
+          this.message = response.data.message;
+          this.showNotification = true;
+          localStorage.setItem('token', response.data.token);
+          setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
+        }
+      } catch (error) {
+        this.message = error.response.data.message;
+        this.showNotification = true;
+        setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
+      }
+    },
+    async login() {
+      try {
+        const response = await axios.post('http://localhost:3005/login', this.loginForm);
+        if (response.status === 200) {
+          this.message = response.data.message;
+          this.showNotification = true;
+          localStorage.setItem('token', response.data.token);
+          setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
+        }
+      } catch (error) {
+        this.message = error.response.data.message;
+        this.showNotification = true;
+        setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
       }
     }
   }
@@ -72,22 +147,27 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 32px;
+  overflow-x: hidden;
+  position: relative;
 }
 .left-side-container {
   width: 100%;
   height: 100%;
-  display: flex;
   align-items: center;
   justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.active {
+  display: flex !important;
 }
 .left-side {
   width: 400px;
-  display: flex;
-  height: 100%;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 48px;
+  gap: 24px;
 }
 .text-block {
   width: 100%;
