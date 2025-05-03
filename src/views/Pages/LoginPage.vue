@@ -79,6 +79,7 @@
 
 <script>
 import axios from "axios";
+import store from '../../../configs/store'
 import NotificationAlert from '@/components/NotificationAlert.vue'
 export default {
   components: {NotificationAlert},
@@ -104,8 +105,8 @@ export default {
         if (response.status === 200) {
           this.message = response.data.message;
           this.showNotification = true;
-          localStorage.setItem('token', response.data.token);
-          setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
+          store('set', 'token', response.data.token);
+          setTimeout(() => { this.showNotification = false; this.message = ''; this.$router.push('/homepage')}, 2000);
         }
       } catch (error) {
         this.message = error.response.data.message;
@@ -120,13 +121,18 @@ export default {
           this.message = response.data.message;
           this.showNotification = true;
           localStorage.setItem('token', response.data.token);
-          setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
+          setTimeout(() => { this.showNotification = false; this.message = ''; this.$router.push('/homepage')}, 2000);
         }
       } catch (error) {
         this.message = error.response.data.message;
         this.showNotification = true;
         setTimeout(() => { this.showNotification = false; this.message = ''}, 2000);
       }
+    }
+  },
+  mounted() {
+    if (store('get', 'token')) {
+      this.$router.push('/homepage');
     }
   }
 }

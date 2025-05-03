@@ -6,5 +6,5 @@ import '@/Styles/general.css'
 const app = createApp(App)
 
 app.use(router)
-
+app.provide('fileBaseURL', '../../')
 app.mount('#app')

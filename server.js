@@ -21,16 +21,18 @@ try {
     })
   }
 } catch (error) {
-  console.error(error);
+  console.error(error)
 }
 
 const server = http.createServer(app);
 
 const createUser = require('./routes/createUser');
 const login = require('./routes/login');
+const automaticAuth = require('./routes/automaticAuth');
 
 app.use('/createUser', createUser)
 app.use('/login', login)
+app.use('/autoAuth', automaticAuth)
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}!`);
