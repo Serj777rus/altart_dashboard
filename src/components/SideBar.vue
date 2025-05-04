@@ -5,7 +5,7 @@
       <h4>ALTAR</h4>
     </div>
     <div class="first-menu">
-      <div class="menus" v-for="item in menu" :key="item.name">
+      <div class="menus" v-for="item in menu" :key="item.name" @click="$router.push(item.link)">
         <span class="material-symbols-outlined">{{ item.icon }}</span>
         <p>{{ item.name }}</p>
       </div>
@@ -32,7 +32,7 @@ export default {
         { name: 'Online Ceremony', icon: 'video_camera_front', link: '/homepage' },
         { name: 'Marriage Certificate', icon: 'license', link: '/homepage' },
         { name: 'Helps & FAQ', icon: 'help', link: '/homepage' },
-        { name: 'Settings', icon: 'settings', link: '/homepage' },
+        { name: 'Settings', icon: 'settings', link: '/settings' },
         { name: 'Log Out', icon: 'logout', link: '/homepage' },
       ],
       fileBaseURL: null,

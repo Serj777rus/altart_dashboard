@@ -130,7 +130,6 @@ export default {
     }
   },
   mounted() {
-    this.auth();
     this.fileBaseURL = inject('fileBaseURL')
     this.name = store('get', 'name')
     this.lastname = store('get', 'lastname')

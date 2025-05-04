@@ -29,10 +29,20 @@ const server = http.createServer(app);
 const createUser = require('./routes/createUser');
 const login = require('./routes/login');
 const automaticAuth = require('./routes/automaticAuth');
+const sendMail = require('./routes/sendMail');
+const deleteAccount = require('./routes/deleteAccount');
+const updateUser = require('./routes/updateUser');
+const updateAvatar = require('./routes/updateAvatar');
+const deleteAvatar = require('./routes/deleteAvatar');
 
 app.use('/createUser', createUser)
 app.use('/login', login)
 app.use('/autoAuth', automaticAuth)
+app.use('/sendMail', sendMail)
+app.use('/deleteAccount', deleteAccount)
+app.use('/updateUser', updateUser)
+app.use('/updateAvatar', updateAvatar)
+app.use('/deleteAvatar', deleteAvatar)
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}!`);
